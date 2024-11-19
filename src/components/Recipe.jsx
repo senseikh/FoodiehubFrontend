@@ -5,7 +5,9 @@ const Recipe = ({ recipe, onDelete }) => {
 
   return (
     <div className="bg-white shadow-md rounded-lg p-4 border border-gray-200 hover:shadow-lg transition-shadow">
-      <h3 className="text-lg font-semibold text-gray-800 mb-2">{recipe.title}</h3>
+      <h3 className="text-lg font-semibold text-gray-800 mb-2">
+        {recipe.title}
+      </h3>
       <p className="text-gray-600 mb-4">{recipe.content}</p>
       <p className="text-sm text-gray-500 mb-4">Created on: {formattedDate}</p>
       <button

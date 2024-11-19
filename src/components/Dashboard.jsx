@@ -38,6 +38,16 @@ const Dashboard = () => {
               }`
             }
           >
+            Blog Management
+          </NavLink>
+          <NavLink
+            to="/dashboard/settings"
+            className={({ isActive }) =>
+              `block px-4 py-2 rounded-lg text-gray-700 font-medium ${
+                isActive ? "bg-indigo-100 text-indigo-600" : "hover:bg-gray-200"
+              }`
+            }
+          >
             App Settings
           </NavLink>
         </nav>

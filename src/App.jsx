@@ -7,6 +7,7 @@ import Account from "./pages/Account";
 import Settings from "./pages/Settings";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./components/Dashboard";
+import AddRecipe from "./pages/AddRecipe";
 
 function Logout() {
   localStorage.clear();
@@ -40,6 +41,14 @@ function App() {
             </ProtectedRoute>
           }
         >
+          <Route
+            path="/dashboard/add-recipe"
+            element={
+              <ProtectedRoute>
+                <AddRecipe />
+              </ProtectedRoute>
+            }
+          />
           <Route path="home" element={<Home />} />
           <Route path="account" element={<Account />} />
           <Route path="settings" element={<Settings />} />
