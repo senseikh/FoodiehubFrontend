@@ -8,6 +8,7 @@ import Settings from "./pages/Settings";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./components/Dashboard";
 import AddRecipe from "./pages/AddRecipe";
+import LandingPage from "./pages/LandingPage";
 
 function Logout() {
   localStorage.clear();
@@ -23,16 +24,10 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Protected Routes */}
-        <Route
-          path="/"
-          element={
-            <ProtectedRoute>
-              <Navigate to="/dashboard/home" />
-            </ProtectedRoute>
-          }
-        />
+        {/* Public Landing Page */}
+        <Route path="/" element={<LandingPage />} />
 
+        {/* Protected Routes */}
         <Route
           path="/dashboard"
           element={
