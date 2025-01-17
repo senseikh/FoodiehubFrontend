@@ -30,9 +30,9 @@ const Dashboard = () => {
           >
             Recipe Management
           </NavLink>
-            
+
           <NavLink
-            to="/dashboard/settings"
+            to="/dashboard/recipe"
             className={({ isActive }) =>
               `block px-4 py-2 rounded-lg text-gray-700 font-medium ${
                 isActive ? "bg-indigo-100 text-indigo-600" : "hover:bg-gray-200"
