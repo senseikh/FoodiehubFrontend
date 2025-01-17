@@ -14,7 +14,6 @@ function Form({ route, method }) {
   const navigate = useNavigate();
 
   const name = method === "login" ? "Login" : "Register";
-
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission behavior
     setIsLoading(true); // Show loading state

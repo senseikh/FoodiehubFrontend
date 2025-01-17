@@ -1,27 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
 
 const LandingPage = () => {
   return (
     <div className="min-h-screen bg-gray-100">
       <header className="bg-white shadow">
-        <nav className="container mx-auto flex justify-between items-center p-4">
-          <h1 className="text-2xl font-bold text-blue-600">Foodie Hub</h1>
-          <div className="space-x-4">
-            <Link
-              to="/login"
-              className="text-gray-700 hover:text-blue-600 font-medium"
-            >
-              Login
-            </Link>
-            <Link
-              to="/register"
-              className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700"
-            >
-              Register
-            </Link>
-          </div>
-        </nav>
+        <Navbar />
       </header>
       <section className="bg-blue-50 py-16">
         <div className="container mx-auto text-center">
@@ -73,13 +59,7 @@ const LandingPage = () => {
           </div>
         </div>
       </section>
-      <footer className="bg-gray-800 py-8">
-        <div className="container mx-auto text-center">
-          <p className="text-gray-400">
-            © 2025 Foodie Hub. All rights reserved.
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };
