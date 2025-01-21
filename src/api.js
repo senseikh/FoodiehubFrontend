@@ -5,7 +5,6 @@ const VITE_API_URL = "https://foodiehub-727v.onrender.com";
 const Api = axios.create({
   // baseURL: import.meta.env.VITE_API_URL,
   baseURL: VITE_API_URL,
-
 });
 
 Api.interceptors.request.use(

@@ -105,7 +105,6 @@ function Form({ route, method }) {
             />
           </div>
 
-          {/* Submit Button */}
           <button
             type="submit"
             className={`w-full py-2 px-4 text-white font-semibold rounded-lg ${
@@ -128,8 +127,6 @@ function Form({ route, method }) {
           )}
         </form>
       </div>
-
-      {/* Footer Component */}
       <Footer />
     </div>
   );

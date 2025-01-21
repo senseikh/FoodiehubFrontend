@@ -6,5 +6,4 @@ const Login = () => {
     <Form route="/api/token/" method="login"/>
   )
 }
-
 export default Login
