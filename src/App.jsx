@@ -12,6 +12,9 @@ import AddRecipe from "./pages/AddRecipe";
 import RecipeDetail from "./pages/RecipeDetail";
 import EditRecipe from "./pages/EditRecipe";
 import Blogs from "./pages/BlogManagement/Blogs";
+import AdminDashboard from "./pages/Admin/AdminDashboard";
+import AdminUsers from "./pages/Admin/AdminUser";
+import AdminLogin from "./pages/Admin/AdminLogin";
 
 function Logout() {
   localStorage.clear();
@@ -22,10 +25,29 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Public Landing Page */}
+        <Route
+          path="/admin/dashboard"
+          element={
+            <ProtectedRoute>
+              <AdminDashboard />
+            </ProtectedRoute>
+          }
+        ></Route>
+
+        <Route
+          path="/admin/users"
+          element={
+            <ProtectedRoute>
+              <AdminUsers />
+            </ProtectedRoute>
+          }
+        ></Route>
+      </Routes>
+      <Routes>
         <Route path="/" element={<LandingPage />} />
 
         {/* Protected Routes */}
+
         <Route
           path="/dashboard"
           element={
@@ -63,7 +85,8 @@ function App() {
         {/* Auth Routes */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="blogs" element={<Blogs />} />
+        <Route path="/blogs" element={<Blogs />} />
+        <Route path="/admin/login" element={<AdminLogin />} />
         {/* Logout Route */}
         <Route path="/logout" element={<Logout />} />
 

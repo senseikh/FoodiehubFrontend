@@ -51,11 +51,15 @@ const RecipeDetail = () => {
     <div className="p-6 bg-gray-50 min-h-screen">
       <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
         <img
-          src={`/media/recipes/images/${recipe.image}`}
-          // src={recipe.image || "https://via.placeholder.com/600x400"}
+          src={recipe.image}
           alt={recipe.title}
-          className="w-full h-64 object-cover"
+          className="w-full h-64 object-cover rounded-lg border border-gray-300 shadow-md transition-transform duration-300 ease-in-out hover:scale-105"
+          onError={(e) => {
+            e.target.onerror = null;
+            e.target.src = "https://via.placeholder.com/600x400";
+          }}
         />
+
         <div className="p-6">
           <h1 className="text-3xl font-bold text-gray-800">{recipe.title}</h1>
           <p className="mt-4 text-gray-600">{recipe.content}</p>
