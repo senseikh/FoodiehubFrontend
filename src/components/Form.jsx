@@ -69,22 +69,34 @@ function Form({ route, method }) {
             password: formData.password,
           };
 
+      // Debug log to see what's being sent
+      console.log("Sending payload:", payload);
+
       const res = await Api.post(route, payload);
+      console.log("Success response:", res.data);
 
       if (method === "login") {
         localStorage.setItem(ACCESS_TOKEN, res.data.access);
         localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
         navigate("/dashboard/home");
       } else {
-        // Show success message and redirect to login
         alert("Registration successful! Please login.");
         navigate("/login");
       }
     } catch (error) {
+      // Detailed error logging
+      console.error("Error details:", {
+        status: error.response?.status,
+        data: error.response?.data,
+        message: error.message,
+      });
+
       const errorMessage =
         error.response?.data?.detail ||
         error.response?.data?.error ||
-        (error.request ? "Unable to connect to the server" : error.message) ||
+        Object.entries(error.response?.data || {})
+          .map(([key, value]) => `${key}: ${value}`)
+          .join(", ") ||
         "Something went wrong";
       setError(errorMessage);
     } finally {
