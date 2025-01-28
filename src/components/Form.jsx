@@ -1,66 +1,96 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { REFRESH_TOKEN, ACCESS_TOKEN } from "../constants";
+import {
+  UserIcon,
+  MailIcon,
+  LockIcon,
+  EyeIcon,
+  EyeOffIcon,
+} from "lucide-react";
 import Api from "../api";
-import Navbar from "./Navbar"; // Import Navbar
-
-import Footer from "./Footer"; // Import Footer
-import PreLoader from "./PreLoader"; // Keep PreLoader if you want to use it in the future
+import Navbar from "./Navbar";
+import Footer from "./Footer";
 
 function Form({ route, method }) {
-  const [username, setUserName] = useState("");
-  const [password, setPassword] = useState("");
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const name = method === "login" ? "Login" : "Register";
+  const isRegister = method === "register";
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setError(""); // Clear error when user types
+  };
+
+  const validateForm = () => {
+    if (isRegister) {
+      if (formData.password !== formData.confirmPassword) {
+        setError("Passwords do not match");
+        return false;
+      }
+      if (formData.password.length < 8) {
+        setError("Password must be at least 8 characters long");
+        return false;
+      }
+      if (!formData.email.includes("@")) {
+        setError("Please enter a valid email address");
+        return false;
+      }
+    }
+    return true;
+  };
+
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent default form submission behavior
-    setIsLoading(true); // Show loading state
+    e.preventDefault();
+    if (!validateForm()) return;
+    setIsLoading(true);
+    setError("");
 
     try {
-      // API call
-      const res = await Api.post(route, { username, password });
+      const payload = isRegister
+        ? {
+            username: formData.username,
+            email: formData.email,
+            password: formData.password,
+          }
+        : { username: formData.username, password: formData.password };
+
+      const res = await Api.post(route, payload);
 
       if (method === "login") {
-        // Save tokens to localStorage for authentication
         localStorage.setItem(ACCESS_TOKEN, res.data.access);
         localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
-
-        // Navigate to the dashboard/home page after login
         navigate("/dashboard/home");
       } else {
-        // Redirect to the login page after registration
         navigate("/login");
       }
     } catch (error) {
-      // Handle errors
-      if (error.response) {
-        // Server responded with a status code outside the 2xx range
-        alert(
-          `Error: ${error.response.data?.detail || "Something went wrong."}`
-        );
-      } else if (error.request) {
-        // Request was made but no response was received
-        alert(
-          "Error: Unable to connect to the server. Please try again later."
-        );
-      } else {
-        // An error occurred while setting up the request
-        alert(`Error: ${error.message}`);
-      }
+      const errorMessage =
+        error.response?.data?.detail ||
+        error.response?.data?.error ||
+        (error.request ? "Unable to connect to the server" : error.message) ||
+        "Something went wrong";
+      setError(errorMessage);
     } finally {
-      setIsLoading(false); // Reset loading state
+      setIsLoading(false);
     }
   };
 
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Navbar Component */}
       <Navbar />
 
-      {/* Main Form Section */}
-      <div className="flex-grow flex items-center justify-center bg-gray-100">
+      <div className="flex-grow flex items-center justify-center bg-gray-100 px-4">
         <form
           onSubmit={handleSubmit}
           className="w-full max-w-md p-8 bg-white rounded-lg shadow-md"
@@ -69,45 +99,92 @@ function Form({ route, method }) {
             {name}
           </h1>
 
-          <div className="mb-4">
-            <label
-              htmlFor="username"
-              className="block text-sm font-medium text-gray-700 mb-2"
-            >
-              Username
-            </label>
-            <input
-              type="text"
-              id="username"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              value={username}
-              onChange={(e) => setUserName(e.target.value)}
-              placeholder="Enter your username"
-              required
-            />
-          </div>
+          {error && (
+            <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+              {error}
+            </div>
+          )}
 
-          <div className="mb-6">
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium text-gray-700 mb-2"
-            >
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter your password"
-              required
-            />
+          <div className="space-y-4">
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <UserIcon className="w-5 h-5 text-gray-400" />
+              </div>
+              <input
+                type="text"
+                name="username"
+                className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                value={formData.username}
+                onChange={handleChange}
+                placeholder="Username"
+                required
+              />
+            </div>
+
+            {isRegister && (
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <MailIcon className="w-5 h-5 text-gray-400" />
+                </div>
+                <input
+                  type="email"
+                  name="email"
+                  className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="Email"
+                  required
+                />
+              </div>
+            )}
+
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <LockIcon className="w-5 h-5 text-gray-400" />
+              </div>
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                value={formData.password}
+                onChange={handleChange}
+                placeholder="Password"
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute inset-y-0 right-0 pr-3 flex items-center"
+              >
+                {showPassword ? (
+                  <EyeOffIcon className="w-5 h-5 text-gray-400" />
+                ) : (
+                  <EyeIcon className="w-5 h-5 text-gray-400" />
+                )}
+              </button>
+            </div>
+
+            {isRegister && (
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <LockIcon className="w-5 h-5 text-gray-400" />
+                </div>
+                <input
+                  type={showPassword ? "text" : "password"}
+                  name="confirmPassword"
+                  className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                  placeholder="Confirm Password"
+                  required
+                />
+              </div>
+            )}
           </div>
 
           <button
             type="submit"
-            className={`w-full py-2 px-4 text-white font-semibold rounded-lg ${
+            className={`w-full py-2 px-4 mt-6 text-white font-semibold rounded-lg ${
               loading
                 ? "bg-blue-400 cursor-not-allowed"
                 : "bg-blue-600 hover:bg-blue-700"
@@ -117,16 +194,26 @@ function Form({ route, method }) {
             {loading ? "Loading..." : name}
           </button>
 
-          {method === "register" && (
-            <p className="mt-4 text-sm text-gray-600 text-center">
-              Already have an account?{" "}
-              <a href="/login" className="text-blue-600 hover:underline">
-                Login here
-              </a>
-            </p>
-          )}
+          <div className="mt-4 text-sm text-gray-600 text-center">
+            {isRegister ? (
+              <p>
+                Already have an account?{" "}
+                <a href="/login" className="text-blue-600 hover:underline">
+                  Login here
+                </a>
+              </p>
+            ) : (
+              <p>
+                Don't have an account?{" "}
+                <a href="/register" className="text-blue-600 hover:underline">
+                  Register here
+                </a>
+              </p>
+            )}
+          </div>
         </form>
       </div>
+
       <Footer />
     </div>
   );
