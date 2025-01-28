@@ -17,7 +17,7 @@ function Form({ route, method }) {
     username: "",
     email: "",
     password: "",
-    confirmPassword: "",
+    confirm_password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setIsLoading] = useState(false);
@@ -34,7 +34,7 @@ function Form({ route, method }) {
 
   const validateForm = () => {
     if (isRegister) {
-      if (formData.password !== formData.confirmPassword) {
+      if (formData.password !== formData.confirm_password) {
         setError("Passwords do not match");
         return false;
       }
@@ -62,8 +62,12 @@ function Form({ route, method }) {
             username: formData.username,
             email: formData.email,
             password: formData.password,
+            confirm_password: formData.confirm_password,
           }
-        : { username: formData.username, password: formData.password };
+        : {
+            email: formData.email,
+            password: formData.password,
+          };
 
       const res = await Api.post(route, payload);
 
@@ -72,6 +76,8 @@ function Form({ route, method }) {
         localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
         navigate("/dashboard/home");
       } else {
+        // Show success message and redirect to login
+        alert("Registration successful! Please login.");
         navigate("/login");
       }
     } catch (error) {
@@ -106,37 +112,37 @@ function Form({ route, method }) {
           )}
 
           <div className="space-y-4">
-            <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <UserIcon className="w-5 h-5 text-gray-400" />
-              </div>
-              <input
-                type="text"
-                name="username"
-                className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                value={formData.username}
-                onChange={handleChange}
-                placeholder="Username"
-                required
-              />
-            </div>
-
             {isRegister && (
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <MailIcon className="w-5 h-5 text-gray-400" />
+                  <UserIcon className="w-5 h-5 text-gray-400" />
                 </div>
                 <input
-                  type="email"
-                  name="email"
+                  type="text"
+                  name="username"
                   className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  value={formData.email}
+                  value={formData.username}
                   onChange={handleChange}
-                  placeholder="Email"
-                  required
+                  placeholder="Username"
+                  required={isRegister}
                 />
               </div>
             )}
+
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <MailIcon className="w-5 h-5 text-gray-400" />
+              </div>
+              <input
+                type="email"
+                name="email"
+                className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="Email"
+                required
+              />
+            </div>
 
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -171,12 +177,12 @@ function Form({ route, method }) {
                 </div>
                 <input
                   type={showPassword ? "text" : "password"}
-                  name="confirmPassword"
+                  name="confirm_password"
                   className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  value={formData.confirmPassword}
+                  value={formData.confirm_password}
                   onChange={handleChange}
                   placeholder="Confirm Password"
-                  required
+                  required={isRegister}
                 />
               </div>
             )}

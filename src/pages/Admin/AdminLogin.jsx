@@ -1,15 +1,22 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { UserIcon, LockIcon, EyeIcon, EyeOffIcon } from "lucide-react";
+import { MailIcon, LockIcon, EyeIcon, EyeOffIcon } from "lucide-react";
 import Api from "../../api";
 
 const AdminLogin = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setError(null);
+  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -17,10 +24,7 @@ const AdminLogin = () => {
     setIsLoading(true);
 
     try {
-      const response = await Api.post("/api/login/admin/", {
-        username,
-        password,
-      });
+      const response = await Api.post("/api/login/admin/", formData);
 
       localStorage.setItem("ACCESS_TOKEN", response.data.access);
       localStorage.setItem("REFRESH_TOKEN", response.data.refresh);
@@ -37,10 +41,6 @@ const AdminLogin = () => {
     }
   };
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
       <div className="w-full max-w-md bg-white shadow-md rounded-lg p-8">
@@ -50,23 +50,21 @@ const AdminLogin = () => {
 
         <form onSubmit={handleLogin} className="space-y-4">
           {error && (
-            <div
-              className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
-              role="alert"
-            >
+            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
               {error}
             </div>
           )}
 
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <UserIcon className="w-5 h-5 text-gray-400" />
+              <MailIcon className="w-5 h-5 text-gray-400" />
             </div>
             <input
-              type="text"
-              placeholder="Username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              type="email"
+              name="email"
+              placeholder="Email"
+              value={formData.email}
+              onChange={handleChange}
               required
               className="w-full pl-10 pr-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
@@ -78,15 +76,16 @@ const AdminLogin = () => {
             </div>
             <input
               type={showPassword ? "text" : "password"}
+              name="password"
               placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={formData.password}
+              onChange={handleChange}
               required
               className="w-full pl-10 pr-10 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <button
               type="button"
-              onClick={togglePasswordVisibility}
+              onClick={() => setShowPassword(!showPassword)}
               className="absolute inset-y-0 right-0 pr-3 flex items-center"
             >
               {showPassword ? (
