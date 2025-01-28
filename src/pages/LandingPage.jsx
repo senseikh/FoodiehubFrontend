@@ -77,7 +77,7 @@ const LandingPage = () => {
             culinary creations with the world.
           </p>
           <Link
-            to="/signup"
+            to="/login"
             className="bg-blue-600 text-white font-bold py-3 px-6 rounded-md hover:bg-blue-700 transition duration-300"
           >
             Get Started

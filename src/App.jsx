@@ -12,6 +12,10 @@ import AddRecipe from "./pages/AddRecipe";
 import RecipeDetail from "./pages/RecipeDetail";
 import EditRecipe from "./pages/EditRecipe";
 import Blogs from "./pages/BlogManagement/Blogs";
+import BlogList from "./pages/BlogManagement/BlogList";
+import AddBlog from "./pages/BlogManagement/AddBlog";
+// import BlogDetail from "./pages/BlogDetail";
+import SharedRecipeDetail from "./pages/SharedRecipeDetail";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
 import AdminUsers from "./pages/Admin/AdminUser";
 import AdminLogin from "./pages/Admin/AdminLogin";
@@ -25,29 +29,29 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Admin Routes */}
         <Route
-          path="/admin/dashboard"
+          path="/admin"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute adminRequired>
               <AdminDashboard />
             </ProtectedRoute>
           }
-        ></Route>
+        >
+          <Route path="dashboard" element={<AdminDashboard />} />
+          <Route path="users" element={<AdminUsers />} />
+        </Route>
+        <Route path="/admin/login" element={<AdminLogin />} />
 
-        <Route
-          path="/admin/users"
-          element={
-            <ProtectedRoute>
-              <AdminUsers />
-            </ProtectedRoute>
-          }
-        ></Route>
-      </Routes>
-      <Routes>
+        {/* Public Routes */}
         <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/blogs" element={<BlogList />} />
+        {/* <Route path="/blogs/:id" element={<BlogDetail />} /> */}
+        <Route path="/recipes/shared/:id" element={<SharedRecipeDetail />} />
 
-        {/* Protected Routes */}
-
+        {/* Protected Dashboard Routes */}
         <Route
           path="/dashboard"
           element={
@@ -56,37 +60,17 @@ function App() {
             </ProtectedRoute>
           }
         >
-          <Route
-            path="/dashboard/recipe/:id"
-            element={
-              <ProtectedRoute>
-                <RecipeDetail />
-              </ProtectedRoute>
-            }
-          />
-
-          <Route
-            path="/dashboard/recipe/:id/edit"
-            element={
-              <ProtectedRoute>
-                <EditRecipe />
-              </ProtectedRoute>
-            }
-          />
-
           <Route index element={<Navigate to="home" />} />
           <Route path="home" element={<Home />} />
           <Route path="blogs" element={<Blogs />} />
+          <Route path="add-blog" element={<AddBlog />} />
           <Route path="account" element={<Account />} />
           <Route path="settings" element={<Settings />} />
           <Route path="add-recipe" element={<AddRecipe />} />
+          <Route path="recipe/:id" element={<RecipeDetail />} />
+          <Route path="recipe/:id/edit" element={<EditRecipe />} />
         </Route>
 
-        {/* Auth Routes */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/blogs" element={<Blogs />} />
-        <Route path="/admin/login" element={<AdminLogin />} />
         {/* Logout Route */}
         <Route path="/logout" element={<Logout />} />
 
