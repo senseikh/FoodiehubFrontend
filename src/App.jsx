@@ -1,4 +1,10 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+  Outlet,
+} from "react-router-dom";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import NotFound from "./pages/NotFound";
@@ -19,6 +25,9 @@ import SharedRecipeDetail from "./pages/SharedRecipeDetail";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
 import AdminUsers from "./pages/Admin/AdminUser";
 import AdminLogin from "./pages/Admin/AdminLogin";
+import CategoryForm from "./pages/Admin/CategoryForm";
+import CategoryList from "./pages/Admin/CategoryList";
+import RecipeList from "./pages/Admin/RecipeList";
 
 function Logout() {
   localStorage.clear();
@@ -34,12 +43,19 @@ function App() {
           path="/admin"
           element={
             <ProtectedRoute adminRequired>
-              <AdminDashboard />
+              {/* <AdminDashboard /> */}
+              <Outlet />
             </ProtectedRoute>
           }
         >
+          <Route index element={<AdminDashboard />} /> // This will show at
+          /admin
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="users" element={<AdminUsers />} />
+          <Route path="categories" element={<CategoryList />} />
+          <Route path="categories/new" element={<CategoryForm />} />
+          <Route path="categories/:id" element={<CategoryForm />} />
+          <Route path="recipes" element={<RecipeList />} />
         </Route>
         <Route path="/admin/login" element={<AdminLogin />} />
 

@@ -24,7 +24,7 @@ const BlogList = () => {
 
   const fetchBlogs = async () => {
     try {
-      const response = await Api.get("/blogs/");
+      const response = await Api.get("/api/blogs/");
       setBlogs(response.data);
       setFilteredBlogs(response.data);
       setLoading(false);
