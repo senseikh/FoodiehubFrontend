@@ -7,6 +7,7 @@ import {
   LockIcon,
   EyeIcon,
   EyeOffIcon,
+  UserCogIcon,
 } from "lucide-react";
 import Api from "../api";
 import Navbar from "./Navbar";
@@ -18,6 +19,7 @@ function Form({ route, method }) {
     email: "",
     password: "",
     confirm_password: "",
+    role: "user", // New field for role selection
   });
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setIsLoading] = useState(false);
@@ -29,7 +31,7 @@ function Form({ route, method }) {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    setError(""); // Clear error when user types
+    setError("");
   };
 
   const validateForm = () => {
@@ -63,13 +65,14 @@ function Form({ route, method }) {
             email: formData.email,
             password: formData.password,
             confirm_password: formData.confirm_password,
+            role: formData.role, // Include role in payload
           }
         : {
             email: formData.email,
             password: formData.password,
+            role: formData.role, // Include role for login
           };
 
-      // Debug log to see what's being sent
       console.log("Sending payload:", payload);
 
       const res = await Api.post(route, payload);
@@ -78,13 +81,15 @@ function Form({ route, method }) {
       if (method === "login") {
         localStorage.setItem(ACCESS_TOKEN, res.data.access);
         localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
-        navigate("/dashboard/home");
+        // Redirect based on role
+        navigate(
+          formData.role === "admin" ? "/admin/dashboard" : "/dashboard/home"
+        );
       } else {
         alert("Registration successful! Please login.");
         navigate("/login");
       }
     } catch (error) {
-      // Detailed error logging
       console.error("Error details:", {
         status: error.response?.status,
         data: error.response?.data,
@@ -114,7 +119,7 @@ function Form({ route, method }) {
           className="w-full max-w-md p-8 bg-white rounded-lg shadow-md"
         >
           <h1 className="text-2xl font-semibold text-center text-gray-800 mb-6">
-            {name}
+            {name} {formData.role === "admin" ? "as Admin" : "as User"}
           </h1>
 
           {error && (
@@ -124,6 +129,22 @@ function Form({ route, method }) {
           )}
 
           <div className="space-y-4">
+            {/* Role Selection Dropdown */}
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <UserCogIcon className="w-5 h-5 text-gray-400" />
+              </div>
+              <select
+                name="role"
+                value={formData.role}
+                onChange={handleChange}
+                className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="user">User</option>
+                <option value="admin">Admin</option>
+              </select>
+            </div>
+
             {isRegister && (
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">

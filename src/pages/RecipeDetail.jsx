@@ -67,6 +67,12 @@ const RecipeDetail = () => {
           <div className="mt-6 flex items-center justify-between">
             <div className="flex space-x-4">
               <Link
+                to={`/recipes/shared/${id}`}
+                className="flex items-center space-x-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
+              >
+                <Edit size={18} /> <span>Share</span>
+              </Link>
+              <Link
                 to={`/dashboard/recipe/${id}/edit`}
                 className="flex items-center space-x-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
               >
