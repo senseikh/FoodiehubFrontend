@@ -11,7 +11,6 @@ const AddRecipe = () => {
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
 
-
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -84,7 +83,7 @@ const AddRecipe = () => {
               className="block text-gray-700 font-medium mb-2 flex items-center"
             >
               <Edit3 className="w-5 h-5 mr-2 text-gray-500" />
-              Recipe Content:
+              Recipe Instructions:
             </label>
             <textarea
               id="content"
