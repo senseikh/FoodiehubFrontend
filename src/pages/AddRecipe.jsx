@@ -7,6 +7,7 @@ const AddRecipe = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [image, setImage] = useState(null);
+  const [ingredients, setIngredients] = useState("");
   const navigate = useNavigate();
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
@@ -30,6 +31,7 @@ const AddRecipe = () => {
     // Create FormData for file upload
     const formData = new FormData();
     formData.append("title", title);
+    formData.append("ingredients", ingredients);
     formData.append("content", content);
     if (imageFile) {
       formData.append("image", imageFile);
@@ -77,21 +79,41 @@ const AddRecipe = () => {
               className="w-full border border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-indigo-300 focus:border-indigo-500 px-4 py-2"
             />
           </div>
+
           <div>
             <label
               htmlFor="content"
               className="block text-gray-700 font-medium mb-2 flex items-center"
             >
               <Edit3 className="w-5 h-5 mr-2 text-gray-500" />
-              Recipe Instructions:
+              Recipe content:
+            </label>
+            <textarea
+              id="content"
+              name="content"
+              required
+              placeholder="Write your recipe content here..."
+              onChange={(e) => setContent(e.target.value)}
+              value={content}
+              className="w-full border border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-indigo-300 focus:border-indigo-500 px-4 py-2 h-32 resize-none"
+            ></textarea>
+          </div>
+
+          <div>
+            <label
+              htmlFor="ingredients"
+              className="block text-gray-700 font-medium mb-2 flex items-center"
+            >
+              <Edit3 className="w-5 h-5 mr-2 text-gray-500" />
+              Recipe ingredients:
             </label>
             <textarea
               id="content"
               name="content"
               required
               placeholder="Write your recipe details here..."
-              onChange={(e) => setContent(e.target.value)}
-              value={content}
+              onChange={(e) => setIngredients(e.target.value)}
+              value={ingredients}
               className="w-full border border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-indigo-300 focus:border-indigo-500 px-4 py-2 h-32 resize-none"
             ></textarea>
           </div>

@@ -32,6 +32,12 @@ const Recipe = ({ recipe, onDelete }) => {
     setIsDeleting(false);
   };
 
+  // const truncateInstructions = (text, maxLength = 150) => {
+  //   return text.length > maxLength
+  //     ? text.substring(0, maxLength) + "..."
+  //     : text;
+  // };
+
   // Truncate content if it's too long
   const truncateContent = (text, maxLength = 150) => {
     return text.length > maxLength
@@ -52,6 +58,10 @@ const Recipe = ({ recipe, onDelete }) => {
           </h3>
           <Eye className="w-5 h-5 text-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity" />
         </div>
+
+        {/* <p className="text-gray-600 mb-4 line-clamp-3">
+          {truncateInstructions(recipe.instructions)}
+        </p> */}
 
         <p className="text-gray-600 mb-4 line-clamp-3">
           {truncateContent(recipe.content)}
