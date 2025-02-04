@@ -28,6 +28,9 @@ import AdminLogin from "./pages/Admin/AdminLogin";
 import CategoryForm from "./pages/Admin/CategoryForm";
 import CategoryList from "./pages/Admin/CategoryList";
 import RecipeList from "./pages/Admin/RecipeList";
+import About from "./components/About";
+import CommunityPage from "./pages/Community/CommunityPage";
+import PublicRecipes from "./pages/Recipe/AllPublicRecipes";
 
 function Logout() {
   localStorage.clear();
@@ -64,6 +67,9 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/blogs" element={<BlogList />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/comminity" element={<CommunityPage />} />
+        <Route path="/recipes" element={<b />} />
         {/* <Route path="/blogs/:id" element={<BlogDetail />} /> */}
         <Route path="/recipes/shared/:id" element={<SharedRecipeDetail />} />
 

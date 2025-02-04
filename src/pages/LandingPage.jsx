@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import Api from "../api";
-
+import CuatomizedNavbar from "../components/CuatomizedNavbar";
 const LandingPage = () => {
   const [featuredBlogs, setFeaturedBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -27,7 +27,8 @@ const LandingPage = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <header className="bg-white shadow">
-        <Navbar />
+        {/* <Navbar /> */}
+        <CuatomizedNavbar />
       </header>
 
       <section className="bg-gradient-to-r from-blue-500 to-blue-600 text-white py-20">
@@ -77,7 +78,7 @@ const LandingPage = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               {featuredBlogs.map((blog) => (
                 <Link
-                  to={`/blogs/${blog.id}`}
+                  to={`/blogs/`}
                   key={blog.id}
                   className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition duration-300"
                 >
