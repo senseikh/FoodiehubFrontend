@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import logo from '../assets/download.png'
+// import logo from '../assets/download.svg'
 
 const CuatomizedNavbar = () => {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -30,7 +32,7 @@ const CuatomizedNavbar = () => {
           className="flex items-center space-x-3 text-white text-2xl font-bold"
         >
           <img
-            src="/Images/download.png"
+            src={logo}
             alt="FoodieHub Logo"
             className="h-10 w-10"
           />

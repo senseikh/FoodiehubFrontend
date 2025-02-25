@@ -62,7 +62,7 @@ const BlogList = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
           {filteredBlogs.map((blog) => (
             <Link
               to={`/blogs/${blog.id}`}
@@ -73,7 +73,8 @@ const BlogList = () => {
                 <img
                   src={blog.image}
                   alt={blog.title}
-                  className="w-full h-48 object-cover"
+                  // className="w-full h-48 object-cover"
+                  className="w-full h-40 object-cover rounded-lg border border-gray-300 shadow-md transition-transform duration-300 ease-in-out hover:scale-105"
                 />
               )}
               <div className="p-4">
@@ -87,9 +88,9 @@ const BlogList = () => {
                       {new Date(blog.created_at).toLocaleDateString()}
                     </span>
                   </div>
-                  <div className="flex items-center text-sm text-purple-600">
+                  {/* <div className="flex items-center text-sm text-purple-600">
                     Read more →
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </Link>

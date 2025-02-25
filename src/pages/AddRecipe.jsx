@@ -25,6 +25,16 @@ const AddRecipe = () => {
     }
   };
 
+  const resetForm = () => {
+    setTitle("");
+    setContent("");
+    setImageFile(null);
+    setImagePreview(null);
+    setIsPublic(true);
+    setSelectedBlog(null);
+    setEditMode(false);
+  };
+
   const createRecipe = (e) => {
     e.preventDefault();
 

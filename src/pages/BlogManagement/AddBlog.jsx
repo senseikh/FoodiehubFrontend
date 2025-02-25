@@ -3,7 +3,7 @@ import { PlusCircle, Edit3, Trash2, Eye, EyeOff, BookOpen } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Api from "../../api";
 
-const AddBlog = () => {
+const AddBlog = (e) => {
   const [blogs, setBlogs] = useState([]);
   const [editMode, setEditMode] = useState(false);
   const [selectedBlog, setSelectedBlog] = useState(null);
@@ -49,14 +49,14 @@ const AddBlog = () => {
     setEditMode(false);
   };
 
-  const handleEdit = (blog) => {
-    setEditMode(true);
-    setSelectedBlog(blog);
-    setTitle(blog.title);
-    setContent(blog.content);
-    setIsPublic(blog.is_public);
-    setImagePreview(blog.image);
-  };
+  // const handleEdit = (blog) => {
+  //   setEditMode(true);
+  //   setSelectedBlog(blog);
+  //   setTitle(blog.title);
+  //   setContent(blog.content);
+  //   setIsPublic(blog.is_public);
+  //   setImagePreview(blog.image);
+  // };
 
   const handleDelete = async (blogId) => {
     if (window.confirm("Are you sure you want to delete this blog post?")) {
@@ -70,32 +70,28 @@ const AddBlog = () => {
     }
   };
 
-  const handleSubmit = async (e) => {
+  const createBlog = (e) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("title", title);
     formData.append("content", content);
-    formData.append("is_public", isPublic);
+    // formData.append("is_public", isPublic);
     if (imageFile) {
       formData.append("image", imageFile);
     }
-
-    try {
-      if (editMode) {
-        await Api.put(`/api/blogs/${selectedBlog.id}`, formData, {
-          headers: { "Content-Type": "multipart/form-data" },
-        });
-      } else {
-        await Api.post("/api/blogs", formData, {
-          headers: { "Content-Type": "multipart/form-data" },
-        });
-      }
-      resetForm();
-      fetchBlogs();
-    } catch (error) {
-      console.error("Error saving blog:", error);
-      alert("Failed to save blog post");
-    }
+    Api.post("/api/blogs/", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+      .then((res) => {
+        if (res.status === 201) {
+          navigate("/dashboard/home");
+        } else {
+          alert("Failed to create blog");
+        }
+      })
+      .catch((err) => alert(err));
   };
 
   return (
@@ -107,7 +103,7 @@ const AddBlog = () => {
             {editMode ? "Edit Blog Post" : "Create a New Blog Post"}
           </h2>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={createBlog} className="space-y-6">
             <div>
               <label className="block text-gray-700 font-medium mb-2 flex items-center">
                 <Edit3 className="w-5 h-5 mr-2 text-gray-500" />
@@ -115,6 +111,8 @@ const AddBlog = () => {
               </label>
               <input
                 type="text"
+                id="title"
+                name="title"
                 required
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
@@ -124,11 +122,16 @@ const AddBlog = () => {
             </div>
 
             <div>
-              <label className="block text-gray-700 font-medium mb-2 flex items-center">
+              <label
+                htmlFor="content"
+                className="block text-gray-700 font-medium mb-2 flex items-center"
+              >
                 <Edit3 className="w-5 h-5 mr-2 text-gray-500" />
                 Blog Content:
               </label>
               <textarea
+                id="content"
+                name="content"
                 required
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
@@ -138,12 +141,17 @@ const AddBlog = () => {
             </div>
 
             <div>
-              <label className="block text-gray-700 font-medium mb-2 flex items-center">
+              <label
+                htmlFor="image"
+                className="block text-gray-700 font-medium mb-2 flex items-center"
+              >
                 <Edit3 className="w-5 h-5 mr-2 text-gray-500" />
                 Blog Image:
               </label>
               <input
                 type="file"
+                id="image"
+                name="image"
                 accept="image/*"
                 onChange={handleImageChange}
                 className="w-full border border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-purple-300 focus:border-purple-500 px-4 py-2"
@@ -159,7 +167,7 @@ const AddBlog = () => {
                 </div>
               )}
             </div>
-
+            {/* 
             <div className="flex items-center space-x-2">
               <input
                 type="checkbox"
@@ -171,24 +179,15 @@ const AddBlog = () => {
               <label htmlFor="isPublic" className="text-gray-700 font-medium">
                 Make this post public
               </label>
-            </div>
+            </div> */}
 
             <div className="flex space-x-4">
               <button
                 type="submit"
                 className="flex-1 px-4 py-2 bg-purple-600 text-white font-semibold rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-offset-2 transition-all"
               >
-                {editMode ? "Update Blog Post" : "Publish Blog Post"}
+                submit
               </button>
-              {editMode && (
-                <button
-                  type="button"
-                  onClick={resetForm}
-                  className="px-4 py-2 bg-gray-500 text-white font-semibold rounded-lg shadow-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 transition-all"
-                >
-                  Cancel
-                </button>
-              )}
             </div>
           </form>
         </div>

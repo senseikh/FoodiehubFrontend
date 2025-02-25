@@ -88,7 +88,7 @@ const LandingPage = () => {
                       `https://via.placeholder.com/400x200?text=Blog`
                     }
                     alt={blog.title}
-                    className="w-full h-40 object-cover"
+                    className="w-full h-40 object-cover rounded-lg border border-gray-300 shadow-md transition-transform duration-300 ease-in-out hover:scale-105"
                   />
                   <div className="p-6">
                     <h4 className="text-xl font-bold text-gray-800 mb-2">
@@ -149,5 +149,4 @@ const LandingPage = () => {
     </div>
   );
 };
-
 export default LandingPage;
