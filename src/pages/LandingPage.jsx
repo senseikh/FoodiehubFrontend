@@ -84,10 +84,10 @@ const LandingPage = () => {
                 >
                   <img
                     src={
-                      blog.image ||
-                      `https://via.placeholder.com/400x200?text=Blog`
+                      blog.image 
                     }
                     alt={blog.title}
+                    // className="w-full h-40 object-cover"
                     className="w-full h-40 object-cover rounded-lg border border-gray-300 shadow-md transition-transform duration-300 ease-in-out hover:scale-105"
                   />
                   <div className="p-6">

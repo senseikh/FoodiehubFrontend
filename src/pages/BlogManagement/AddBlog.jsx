@@ -75,7 +75,7 @@ const AddBlog = (e) => {
     const formData = new FormData();
     formData.append("title", title);
     formData.append("content", content);
-    // formData.append("is_public", isPublic);
+    formData.append("is_public", isPublic);
     if (imageFile) {
       formData.append("image", imageFile);
     }

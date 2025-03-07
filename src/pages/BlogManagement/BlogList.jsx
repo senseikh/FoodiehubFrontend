@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { BookOpen, Search, Tag } from "lucide-react";
 import Api from "../../api";
-
+import Navbar from "../../components/Navbar";
+import CuatomizedNavbar from "../../components/CuatomizedNavbar";
 const BlogList = () => {
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -43,8 +44,10 @@ const BlogList = () => {
   }
 
   return (
+   
     <div className="p-6 bg-gradient-to-br from-purple-50 via-white to-gray-50 min-h-screen">
       <div className="max-w-6xl mx-auto">
+     
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold text-purple-800 flex items-center">
             <BookOpen className="w-8 h-8 mr-2" />
@@ -98,6 +101,7 @@ const BlogList = () => {
         </div>
       </div>
     </div>
+ 
   );
 };
 

@@ -249,6 +249,18 @@ function Form({ route, method }) {
                 </a>
               </p>
             )}
+
+            {/* Forgot Password Link */}
+            {!isRegister && (
+              <p className="mt-2">
+                <a
+                  href="/request/password-reset"
+                  className="text-blue-600 hover:underline"
+                >
+                  Forgot Password?
+                </a>
+              </p>
+            )}
           </div>
         </form>
       </div>

@@ -4,6 +4,7 @@ import {
   Route,
   Navigate,
   Outlet,
+  useLocation,
 } from "react-router-dom";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -20,7 +21,6 @@ import EditRecipe from "./pages/EditRecipe";
 import Blogs from "./pages/BlogManagement/Blogs";
 import BlogList from "./pages/BlogManagement/BlogList";
 import AddBlog from "./pages/BlogManagement/AddBlog";
-// import BlogDetail from "./pages/BlogDetail";
 import SharedRecipeDetail from "./pages/SharedRecipeDetail";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
 import AdminUsers from "./pages/Admin/AdminUser";
@@ -31,6 +31,11 @@ import RecipeList from "./pages/Admin/RecipeList";
 import About from "./components/About";
 import CommunityPage from "./pages/Community/CommunityPage";
 import PublicRecipes from "./pages/Recipe/AllPublicRecipes";
+import PasswordResetRequest from "./Auth.jsx/PasswordResetRequest";
+import CuatomizedNavbar from "./components/CuatomizedNavbar";
+import PasswordReset from "./Auth.jsx/PasswordReset";
+import Navbar from "./components/Navbar";
+
 
 function Logout() {
   localStorage.clear();
@@ -38,27 +43,36 @@ function Logout() {
 }
 
 function App() {
+  const location = useLocation();
+
+  // Hide Navbar for authentication & password reset routes
+  const noNavbar =
+    ["/login", "/register", "/admin/login", "/request/password-reset"].includes(
+      location.pathname
+    ) || location.pathname.includes("password");
+
   return (
-    <BrowserRouter>
+    <>
+      {!noNavbar && <Navbar />} 
       <Routes>
         {/* Admin Routes */}
         <Route
           path="/admin"
           element={
             <ProtectedRoute adminRequired>
-              {/* <AdminDashboard /> */}
               <Outlet />
             </ProtectedRoute>
           }
         >
-          <Route index element={<AdminDashboard />} /> // This will show at
-          /admin
+          {!noNavbar}
+          <Route index element={<AdminDashboard />} />
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="users" element={<AdminUsers />} />
           <Route path="categories" element={<CategoryList />} />
           <Route path="categories/new" element={<CategoryForm />} />
           <Route path="categories/:id" element={<CategoryForm />} />
           <Route path="recipes" element={<RecipeList />} />
+         
         </Route>
         <Route path="/admin/login" element={<AdminLogin />} />
 
@@ -68,11 +82,11 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/blogs" element={<BlogList />} />
         <Route path="/about" element={<About />} />
-        <Route path="/comminity" element={<CommunityPage />} />
-        <Route path="/recipes" element={<b />} />
-        {/* <Route path="/blogs/:id" element={<BlogDetail />} /> */}
+        <Route path="/community" element={<CommunityPage />} />
+        <Route path="/recipes" element={<PublicRecipes />} />
         <Route path="/recipes/shared/:id" element={<SharedRecipeDetail />} />
-
+        <Route path="/request/password-reset" element={<PasswordResetRequest />} />
+        <Route path="/password-reset/:token" element={<PasswordReset />} />
         {/* Protected Dashboard Routes */}
         <Route
           path="/dashboard"
@@ -99,8 +113,15 @@ function App() {
         {/* Catch-All Route */}
         <Route path="*" element={<NotFound />} />
       </Routes>
-    </BrowserRouter>
+    </>
   );
 }
 
-export default App;
+// Wrap in BrowserRouter at a higher level (index.js or main.jsx)
+export default function WrappedApp() {
+  return (
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  );
+}
