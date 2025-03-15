@@ -30,11 +30,12 @@ import CategoryList from "./pages/Admin/CategoryList";
 import RecipeList from "./pages/Admin/RecipeList";
 import About from "./components/About";
 import CommunityPage from "./pages/Community/CommunityPage";
-import PublicRecipes from "./pages/Recipe/AllPublicRecipes";
+import PublicRecipes from "./pages/Recipe/PublicRecies";
 import PasswordResetRequest from "./Auth.jsx/PasswordResetRequest";
 import CuatomizedNavbar from "./components/CuatomizedNavbar";
 import PasswordReset from "./Auth.jsx/PasswordReset";
 import Navbar from "./components/Navbar";
+
 
 
 function Logout() {
@@ -53,7 +54,7 @@ function App() {
 
   return (
     <>
-      {!noNavbar && <Navbar />} 
+      {/* {!noNavbar && <Navbar />}  */}
       <Routes>
         {/* Admin Routes */}
         <Route
@@ -83,10 +84,11 @@ function App() {
         <Route path="/blogs" element={<BlogList />} />
         <Route path="/about" element={<About />} />
         <Route path="/community" element={<CommunityPage />} />
-        <Route path="/recipes" element={<PublicRecipes />} />
         <Route path="/recipes/shared/:id" element={<SharedRecipeDetail />} />
         <Route path="/request/password-reset" element={<PasswordResetRequest />} />
         <Route path="/password-reset/:token" element={<PasswordReset />} />
+        <Route path="/recipes/public" element={<PublicRecipes />} />
+        
         {/* Protected Dashboard Routes */}
         <Route
           path="/dashboard"

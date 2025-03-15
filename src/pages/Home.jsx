@@ -19,7 +19,7 @@ const Home = () => {
         setRecipes(data);
         console.log(data);
       })
-      .catch((err) => alert(err));
+      .catch((err) => alert(err))
   };
 
   const deleteRecipe = (id) => {

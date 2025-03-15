@@ -42,7 +42,7 @@ const LandingPage = () => {
           </p>
           <div className="space-x-4">
             <Link
-              to="/dashboard/home"
+              to="/recipes/public/"
               className="bg-yellow-300 text-blue-800 font-bold py-3 px-6 rounded-md hover:bg-yellow-400 transition duration-300"
             >
               Explore Recipes
@@ -83,9 +83,7 @@ const LandingPage = () => {
                   className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition duration-300"
                 >
                   <img
-                    src={
-                      blog.image 
-                    }
+                    src={blog.image}
                     alt={blog.title}
                     // className="w-full h-40 object-cover"
                     className="w-full h-40 object-cover rounded-lg border border-gray-300 shadow-md transition-transform duration-300 ease-in-out hover:scale-105"

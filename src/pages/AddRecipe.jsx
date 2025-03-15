@@ -11,6 +11,7 @@ const AddRecipe = () => {
   const navigate = useNavigate();
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
+  const [isPublic, setIsPublic] = useState(false);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -43,9 +44,11 @@ const AddRecipe = () => {
     formData.append("title", title);
     formData.append("ingredients", ingredients);
     formData.append("content", content);
+
     if (imageFile) {
       formData.append("image", imageFile);
     }
+    formData.append("is_public", isPublic);
 
     Api.post("/api/recipe/", formData, {
       headers: {
@@ -127,7 +130,21 @@ const AddRecipe = () => {
               className="w-full border border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-indigo-300 focus:border-indigo-500 px-4 py-2 h-32 resize-none"
             ></textarea>
           </div>
-
+          <div>
+            <label
+              htmlFor="is_public"
+              className="block text-gray-700 font-medium mb-2 flex items-center"
+            >
+              <input
+                type="checkbox"
+                id="is_public"
+                name="is_public"
+                onChange={(e) => setIsPublic(e.target.checked)}
+                className="mr-2"
+              />
+              Make Recipe Public
+            </label>
+          </div>
           <div>
             <label
               htmlFor="image"
@@ -136,7 +153,6 @@ const AddRecipe = () => {
               <Edit3 className="w-5 h-5 mr-2 text-gray-500" />
               Recipe Image:
             </label>
-
             <input
               type="file"
               id="image"
