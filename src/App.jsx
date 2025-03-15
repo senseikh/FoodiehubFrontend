@@ -15,13 +15,11 @@ import Account from "./pages/Account";
 import Settings from "./pages/Settings";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./components/Dashboard";
-import AddRecipe from "./pages/AddRecipe";
-import RecipeDetail from "./pages/RecipeDetail";
+import AddRecipe from "./pages/Recipe/AddRecipe";
 import EditRecipe from "./pages/EditRecipe";
 import Blogs from "./pages/BlogManagement/Blogs";
 import BlogList from "./pages/BlogManagement/BlogList";
 import AddBlog from "./pages/BlogManagement/AddBlog";
-import SharedRecipeDetail from "./pages/SharedRecipeDetail";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
 import AdminUsers from "./pages/Admin/AdminUser";
 import AdminLogin from "./pages/Admin/AdminLogin";
@@ -35,8 +33,7 @@ import PasswordResetRequest from "./Auth.jsx/PasswordResetRequest";
 import CuatomizedNavbar from "./components/CuatomizedNavbar";
 import PasswordReset from "./Auth.jsx/PasswordReset";
 import Navbar from "./components/Navbar";
-
-
+import RecipeDetail from "./pages/Recipe/RecipeDetail";
 
 function Logout() {
   localStorage.clear();
@@ -73,7 +70,6 @@ function App() {
           <Route path="categories/new" element={<CategoryForm />} />
           <Route path="categories/:id" element={<CategoryForm />} />
           <Route path="recipes" element={<RecipeList />} />
-         
         </Route>
         <Route path="/admin/login" element={<AdminLogin />} />
 
@@ -84,11 +80,13 @@ function App() {
         <Route path="/blogs" element={<BlogList />} />
         <Route path="/about" element={<About />} />
         <Route path="/community" element={<CommunityPage />} />
-        <Route path="/recipes/shared/:id" element={<SharedRecipeDetail />} />
-        <Route path="/request/password-reset" element={<PasswordResetRequest />} />
+        <Route
+          path="/request/password-reset"
+          element={<PasswordResetRequest />}
+        />
         <Route path="/password-reset/:token" element={<PasswordReset />} />
         <Route path="/recipes/public" element={<PublicRecipes />} />
-        
+
         {/* Protected Dashboard Routes */}
         <Route
           path="/dashboard"

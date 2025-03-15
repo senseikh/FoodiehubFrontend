@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { FiPlus } from "react-icons/fi";
 
 import Api from "../../api";
-import Recipe from "../../components/Recipe";
+import Recipe from "../Recipe/Recipe";
 const Blog = () => {
   const [recipes, setRecipes] = useState([]);
   const navigate = useNavigate();

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { Edit, Trash2, ArrowLeft } from "lucide-react"; // Import Lucide React icons
-import Api from "../api";
+import Api from "../../api";
 
 const RecipeDetail = () => {
   const { id } = useParams();

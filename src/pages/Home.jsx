@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Api from "../api";
-import Recipe from "../components/Recipe";
+import Recipe from "./Recipe/Recipe";
 import { useNavigate } from "react-router-dom";
 import { FiPlus } from "react-icons/fi";
 
@@ -19,7 +19,7 @@ const Home = () => {
         setRecipes(data);
         console.log(data);
       })
-      .catch((err) => alert(err))
+      .catch((err) => alert(err));
   };
 
   const deleteRecipe = (id) => {
