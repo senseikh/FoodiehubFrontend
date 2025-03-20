@@ -53,6 +53,9 @@ const Dashboard = () => {
           <NavItem to="/dashboard/blogs" icon={BookOpen}>
             Blog Management
           </NavItem>
+          <NavItem to="/hotels" icon={BookOpen}>
+            Hotel/Restaurants Managements
+          </NavItem>
           <NavItem to="/dashboard/settings" icon={Settings}>
             App Settings
           </NavItem>

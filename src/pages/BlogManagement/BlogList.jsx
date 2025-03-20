@@ -42,12 +42,14 @@ const BlogList = () => {
       </div>
     );
   }
-
+  const handleCardClick = () => {
+    navigate(`/dashboard/blogs/${blog.id}`);
+  };
   return (
-   
-    <div className="p-6 bg-gradient-to-br from-purple-50 via-white to-gray-50 min-h-screen">
-      <div className="max-w-6xl mx-auto">
-     
+    
+    <div className=" min-h-screen bg-gray-50 p-6 bg-gradient-to-br from-purple-50 via-white to-gray-50">
+      <Navbar/>
+      <div className="mt-12 container mx-auto py-8 px-4">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold text-purple-800 flex items-center">
             <BookOpen className="w-8 h-8 mr-2" />
@@ -68,7 +70,7 @@ const BlogList = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
           {filteredBlogs.map((blog) => (
             <Link
-              to={`/blogs/${blog.id}`}
+              to={`/blog/${blog.id}`}
               key={blog.id}
               className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
             >
@@ -91,9 +93,9 @@ const BlogList = () => {
                       {new Date(blog.created_at).toLocaleDateString()}
                     </span>
                   </div>
-                  {/* <div className="flex items-center text-sm text-purple-600">
+                  <div className="flex items-center text-sm text-purple-600">
                     Read more →
-                  </div> */}
+                  </div>
                 </div>
               </div>
             </Link>
@@ -101,7 +103,6 @@ const BlogList = () => {
         </div>
       </div>
     </div>
- 
   );
 };
 

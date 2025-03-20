@@ -9,7 +9,7 @@ const AddBlog = (e) => {
   const [selectedBlog, setSelectedBlog] = useState(null);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [isPublic, setIsPublic] = useState(true);
+  const [isPublic, setIsPublic] = useState();
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ const AddBlog = (e) => {
 
   const fetchBlogs = async () => {
     try {
-      const response = await Api.get("/api/blogs/my-blogs");
+      const response = await Api.get("/api/blogs/");
       setBlogs(response.data);
     } catch (error) {
       console.error("Error fetching blogs:", error);
@@ -49,14 +49,14 @@ const AddBlog = (e) => {
     setEditMode(false);
   };
 
-  // const handleEdit = (blog) => {
-  //   setEditMode(true);
-  //   setSelectedBlog(blog);
-  //   setTitle(blog.title);
-  //   setContent(blog.content);
-  //   setIsPublic(blog.is_public);
-  //   setImagePreview(blog.image);
-  // };
+  const handleEdit = (blog) => {
+    setEditMode(true);
+    setSelectedBlog(blog);
+    setTitle(blog.title);
+    setContent(blog.content);
+    setIsPublic(blog.is_public);
+    setImagePreview(blog.image);
+  };
 
   const handleDelete = async (blogId) => {
     if (window.confirm("Are you sure you want to delete this blog post?")) {
@@ -86,7 +86,7 @@ const AddBlog = (e) => {
     })
       .then((res) => {
         if (res.status === 201) {
-          navigate("/dashboard/home");
+          navigate("/dashboard/blogs");
         } else {
           alert("Failed to create blog");
         }
@@ -167,7 +167,7 @@ const AddBlog = (e) => {
                 </div>
               )}
             </div>
-            {/* 
+            
             <div className="flex items-center space-x-2">
               <input
                 type="checkbox"
@@ -179,7 +179,7 @@ const AddBlog = (e) => {
               <label htmlFor="isPublic" className="text-gray-700 font-medium">
                 Make this post public
               </label>
-            </div> */}
+            </div>
 
             <div className="flex space-x-4">
               <button

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import logo from '../assets/download.png'
+import logo from "../assets/download.png";
 // import logo from '../assets/download.svg'
 
 const CuatomizedNavbar = () => {
@@ -31,11 +31,7 @@ const CuatomizedNavbar = () => {
           to="/"
           className="flex items-center space-x-3 text-white text-2xl font-bold"
         >
-          <img
-            src={logo}
-            alt="FoodieHub Logo"
-            className="h-10 w-10"
-          />
+          <img src={logo} alt="FoodieHub Logo" className="h-10 w-10" />
           <span>Foodie Hub</span>
         </NavLink>
 
@@ -127,28 +123,13 @@ const CuatomizedNavbar = () => {
               <ul className="absolute right-0 mt-2 w-48 bg-white text-black rounded-lg shadow-lg">
                 <li>
                   <NavLink
-                    to="/comminity"
+                    to="/community/travel-advisor"
                     className="block px-4 py-2 hover:bg-gray-100"
                   >
                     Hotels & Restaurants Nearby
                   </NavLink>
                 </li>
-                <li>
-                  <NavLink
-                    to="/community#collaboration"
-                    className="block px-4 py-2 hover:bg-gray-100"
-                  >
-                    Collaborate with Other Restaurants
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    to="/community#community-support"
-                    className="block px-4 py-2 hover:bg-gray-100"
-                  >
-                    Community Support & Resources
-                  </NavLink>
-                </li>
+                
               </ul>
             )}
           </div>
@@ -262,17 +243,8 @@ const CuatomizedNavbar = () => {
           </button>
           {isCommunityDropdownOpen && (
             <div>
-              <NavLink
-                to="/community#hotels-restaurants"
-                className="block py-2"
-              >
+              <NavLink to="/community/trip-advisor" className="block py-2">
                 Hotels & Restaurants Nearby
-              </NavLink>
-              <NavLink to="/community#collaboration" className="block py-2">
-                Collaborate with Other Restaurants
-              </NavLink>
-              <NavLink to="/community#community-support" className="block py-2">
-                Community Support & Resources
               </NavLink>
             </div>
           )}

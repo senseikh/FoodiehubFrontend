@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
+
 import Api from "../api";
 import CuatomizedNavbar from "../components/CuatomizedNavbar";
 const LandingPage = () => {
@@ -27,8 +28,8 @@ const LandingPage = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <header className="bg-white shadow">
-        {/* <Navbar /> */}
-        <CuatomizedNavbar />
+        <Navbar />
+        {/* <CuatomizedNavbar /> */}
       </header>
 
       <section className="bg-gradient-to-r from-blue-500 to-blue-600 text-white py-20">
