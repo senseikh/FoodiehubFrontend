@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Api from "../../api";
 import { useNavigate } from "react-router-dom";
 import { PlusCircle, Edit3 } from "lucide-react";
@@ -12,6 +12,18 @@ const AddRecipe = () => {
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [isPublic, setIsPublic] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("");
+
+  useEffect(() => {
+    Api.get("/api/categories")
+      .then((res) => {
+        if (res.status === 200) {
+          setCategories(res.data);
+        }
+      })
+      .catch((err) => console.error("Error fetching categories:", err));
+  }, []);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -47,6 +59,9 @@ const AddRecipe = () => {
 
     if (imageFile) {
       formData.append("image", imageFile);
+    }
+    if (selectedCategory) {
+      formData.append("category", selectedCategory);
     }
     formData.append("is_public", isPublic);
 
@@ -91,6 +106,32 @@ const AddRecipe = () => {
               value={title}
               className="w-full border border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-indigo-300 focus:border-indigo-500 px-4 py-2"
             />
+          </div>
+
+          <div>
+            <label
+              htmlFor="category"
+              className="block text-gray-700 font-medium mb-2"
+            >
+              Category:
+            </label>
+            <select
+              id="category"
+              name="category"
+              required
+              onChange={(e) => setSelectedCategory(e.target.value)}
+              value={selectedCategory}
+              className="w-full border border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-indigo-300 focus:border-indigo-500 px-4 py-2"
+            >
+              <option value="" disabled>
+                Select a category
+              </option>
+              {categories.map((category) => (
+                <option key={category.id} value={category.id}>
+                  {category.name}
+                </option>
+              ))}
+            </select>
           </div>
 
           <div>
